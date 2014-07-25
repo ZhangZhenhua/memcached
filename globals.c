@@ -16,7 +16,7 @@
  * rather than absolute UNIX timestamps, a space savings on systems where
  * sizeof(time_t) > sizeof(unsigned int).
  */
-volatile rel_time_t current_time;
+volatile rel_time_t current_time; /* zhangzh: updated every 1 second by libevent Timer */
 
 /** exported globals **/
 struct stats stats;

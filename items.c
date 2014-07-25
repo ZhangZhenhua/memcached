@@ -31,6 +31,7 @@ typedef struct {
     uint64_t crawler_reclaimed;
 } itemstats_t;
 
+/* zhangzh Per-slab LRU list */
 static item *heads[LARGEST_ID];
 static item *tails[LARGEST_ID];
 static crawler crawlers[LARGEST_ID];
@@ -360,6 +361,7 @@ void do_item_remove(item *it) {
     }
 }
 
+/* zhangzh: update LRU link only if it hasn't been touched in 60(UPDATE_INTERVAL) secs. */
 void do_item_update(item *it) {
     MEMCACHED_ITEM_UPDATE(ITEM_key(it), it->nkey, it->nbytes);
     if (it->time < current_time - ITEM_UPDATE_INTERVAL) {
@@ -408,6 +410,9 @@ char *do_item_cachedump(const unsigned int slabs_clsid, const unsigned int limit
             continue;
         }
         /* Copy the key since it may not be null-terminated in the struct */
+	/* zhangzh: strncpy will ends with it->key has '\0' before nkey bytes...
+	 * so only string key here? how about binary keys?
+	 * well, confirmed, memcached only supports string key...*/
         strncpy(key_temp, ITEM_key(it), it->nkey);
         key_temp[it->nkey] = 0x00; /* terminate */
         len = snprintf(temp, sizeof(temp), "ITEM %s [%d b; %lu s]\r\n",

@@ -144,7 +144,7 @@ static void maxconns_handler(const int fd, const short which, void *arg) {
     }
 }
 
-#define REALTIME_MAXDELTA 60*60*24*30
+#define REALTIME_MAXDELTA 60*60*24*30 /* zhangzh 30 days, maximum expire time */
 
 /*
  * given time value that's either unix time or delta from current unix time, return
