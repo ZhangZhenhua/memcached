@@ -121,6 +121,11 @@ void item_unlock_global(void) {
     mutex_unlock(&item_global_lock);
 }
 
+/* zhangzh: lock optimization, two kinds of locks
+ * the global_lock is used when expanding hash table(in assoc.c),
+ * and smaller lock is used otherwise. One smaller lock protecting
+ * some of the buckets in hash table.
+ */
 void item_lock(uint32_t hv) {
     uint8_t *lock_type = pthread_getspecific(item_lock_type_key);
     if (likely(*lock_type == ITEM_LOCK_GRANULAR)) {
@@ -803,6 +808,7 @@ void thread_init(int nthreads, struct event_base *main_base) {
         power = 13;
     }
 
+    /* zhangzh: here is the segmented lock across all buckets of hash table..*/
     item_lock_count = hashsize(power);
     item_lock_hashpower = power;
 

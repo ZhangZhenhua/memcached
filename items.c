@@ -582,6 +582,15 @@ item *do_item_get(const char *key, const size_t nkey, const uint32_t hv) {
                 fprintf(stderr, " -nuked by flush");
             }
         } else if (it->exptime != 0 && it->exptime <= current_time) {
+		/* zhangzh: some old slides said any record will expire after
+		 * REALTIME_MAXDELTA, well, this must be a recent change that
+		 * user can let record never expire by setting its exptime to
+		 * zero.
+		 *
+		 * Well, complain about memcached coding style a little. Using
+		 * 4 bytes intent, ok will change to use PLFS .vimrc then. :)
+		 *
+		 */
             do_item_unlink(it, hv);
             do_item_remove(it);
             it = NULL;

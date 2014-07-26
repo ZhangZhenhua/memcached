@@ -168,6 +168,7 @@ int assoc_insert(item *it, const uint32_t hv) {
 
     hash_items++;
     if (! expanding && hash_items > (hashsize(hashpower) * 3) / 2) {
+	    /* zhangzh: when expanding the hash table ..*/
         assoc_start_expand();
     }
 
