@@ -126,11 +126,11 @@ void cache_free(cache_t *cache, void *ptr) {
     ptr = pre;
 #endif
     if (cache->freecurr < cache->freetotal) {
-        cache->ptr[cache->freecurr++] = ptr;
+        cache->ptr[cache->freecurr++] = ptr; /* zhangzh: key caching code */
     } else {
         /* try to enlarge free connections array */
         size_t newtotal = cache->freetotal * 2;
-        void **new_free = realloc(cache->ptr, sizeof(char *) * newtotal);
+        void **new_free = realloc(cache->ptr, sizeof(char *) * newtotal); /*zhangzh: good usage of realloc */
         if (new_free) {
             cache->freetotal = newtotal;
             cache->ptr = new_free;
