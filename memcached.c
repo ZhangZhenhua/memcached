@@ -2849,7 +2849,7 @@ static void process_stat(conn *c, token_t *tokens, const size_t ntokens) {
     }
 }
 
-/* ntokens is overwritten here... shrug.. */
+/* ntokens is overwritten here... shrug.. */ /*zhangzh: shrug means "I don't care..."*/
 static inline void process_get_command(conn *c, token_t *tokens, size_t ntokens, bool return_cas) {
     char *key;
     size_t nkey;
