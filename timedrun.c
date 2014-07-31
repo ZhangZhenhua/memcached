@@ -78,11 +78,13 @@ static int spawn_and_wait(char **argv)
         rv = EX_OSERR;
         break; /* NOTREACHED */
     case 0:
+	/* zhangzh: child do something ...*/
         execvp(argv[0], argv);
         perror("exec");
         rv = EX_SOFTWARE;
         break; /* NOTREACHED */
     default:
+	/* zhangzh: parent wait for its child ...until naptime reached. */
         rv = wait_for_process(pid);
     }
     return rv;
