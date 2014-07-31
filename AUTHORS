@@ -1,2 +1,9 @@
 Anatoly Vorobey <mellon@pobox.com>
 Brad Fitzpatrick <brad@danga.com>
+
+# zhangzh: Brad developped groupcache which is another
+# memcached written in Go. It drops some features like
+# expire time and expire item reclycling, which means
+# cached items will never expire. This enables some other
+# rich features like hot item cacheing/replication.
+# Groupcache is now used in multiple projects in Google.
